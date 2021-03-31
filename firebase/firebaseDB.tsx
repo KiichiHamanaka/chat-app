@@ -25,10 +25,14 @@ const useSetDocument = (ref: firebase.database.Reference) => {
 };
 
 export const useRegisterData = () => {
-    const setDocument = useSetDocument(useDatabase());
+    const setDocument = useSetDocument(firebase.database().ref(`/bbs/` + Date()));
     const {data: registeredData} = useFetchAllData();
-    const registerData = useCallback((registerData: {}) => {
-        setDocument({...registeredData, ...registerData});
+    const registerData = useCallback((registerData: {
+        name : string,
+        body : string,
+        createdAt : number
+    }) => {
+        setDocument({...registerData});
     }, [setDocument, registeredData]);
 
     return registerData;

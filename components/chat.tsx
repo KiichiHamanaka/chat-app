@@ -3,13 +3,10 @@ import { useFetchAllData } from '../firebase/firebaseDB';
 
 const Message:React.FC = () => {
     const data = useFetchAllData();
-    const dataList = useMemo(() => Object.entries(data || {}).map(([key, value]) => ({ key, value })), [data]);
-
+    const dataList = useMemo(() => Object.entries(data).map(([key, value]) => ({ value })), [data]);
+    console.log(dataList)
     return(
         <ul>
-            {dataList.map((text) => (
-                <li>{text}</li>
-            ))}
         </ul>
     )
 }

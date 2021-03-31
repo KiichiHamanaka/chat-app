@@ -4,15 +4,21 @@ import {useRegisterData} from "../firebase/firebaseDB";
 
 const Form:React.FC = () => {
     const [message,setMessage] = useState('')
-    const [keyData, setKeyData] = useState<string>('');
-    const [valueData, setValueData] = useState<string>('');
+    const [name, setName] = useState<string>('');
+    const [body, setBody] = useState<string>('');
     const registerData = useRegisterData();
 
     return(
         <div>
-            <label>Name: <input placeholder="key" onChange={(event: ChangeEvent<HTMLInputElement>) => setKeyData(event.target.value)}/></label>
-            <label>Body: <input placeholder="value" onChange={(event: ChangeEvent<HTMLInputElement>) => setValueData(event.target.value)}/></label>
-            <button onClick={() => registerData({[keyData]: valueData})}>Submit</button>
+            <label>Name: <input onChange={(event: ChangeEvent<HTMLInputElement>) => setName(event.target.value)}/></label>
+            <label>Body: <input onChange={(event: ChangeEvent<HTMLInputElement>) => setBody(event.target.value)}/></label>
+            <button onClick={() => registerData(
+                {
+                                name : name,
+                                body : body,
+                                createdAt : Date.now()
+                            }
+                )}>Submit</button>
         </div>
     )
 }

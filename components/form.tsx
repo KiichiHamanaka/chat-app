@@ -1,20 +1,19 @@
-import React, {useState} from 'react'
+import React, {ChangeEvent, useState} from 'react'
 import {messageItem} from '../types/index'
+import {useRegisterData} from "../firebase/firebaseDB";
 
 const Form:React.FC = () => {
     const [message,setMessage] = useState('')
-    const handleChange = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
-        setMessage(event.target.value)
-    }
-    const handleSubmit = (event:React.FormEvent) => {
-        setMessage("")
-    }
+    const [keyData, setKeyData] = useState<string>('');
+    const [valueData, setValueData] = useState<string>('');
+    const registerData = useRegisterData();
+
     return(
-        <form onSubmit={handleSubmit}>
-            <label>Body:</label>
-            <textarea value={message} onChange={handleChange}/>
-            <input type="submit" value="Submit" />
-        </form>
+        <div>
+            <label>Name: <input placeholder="key" onChange={(event: ChangeEvent<HTMLInputElement>) => setKeyData(event.target.value)}/></label>
+            <label>Body: <input placeholder="value" onChange={(event: ChangeEvent<HTMLInputElement>) => setValueData(event.target.value)}/></label>
+            <button onClick={() => registerData({[keyData]: valueData})}>Submit</button>
+        </div>
     )
 }
 
